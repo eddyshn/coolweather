@@ -1,4 +1,4 @@
-package com.coolweather.coolweather.base;
+package com.coolweather.coolweather.core;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
