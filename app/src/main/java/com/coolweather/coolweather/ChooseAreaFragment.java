@@ -3,6 +3,7 @@ package com.coolweather.coolweather;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,9 +20,16 @@ import android.widget.Toast;
 import com.coolweather.coolweather.db.City;
 import com.coolweather.coolweather.db.County;
 import com.coolweather.coolweather.db.Province;
+import com.coolweather.coolweather.gson.Prov;
+import com.coolweather.coolweather.network.RetrofitUtil;
 import com.coolweather.coolweather.util.HttpUtil;
+import com.coolweather.coolweather.util.LogUtil;
 import com.coolweather.coolweather.util.Utility;
 
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -31,6 +39,7 @@ import org.litepal.LitePal;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import io.reactivex.Observable;
 
 public class ChooseAreaFragment extends Fragment {
     private static final String TAG = "ChooseAreaFragment";
@@ -155,6 +164,15 @@ public class ChooseAreaFragment extends Fragment {
         } else {
             String address = "http://guolin.tech/api/china";
             queryFromServer(address, "province");
+            //test code with retrofit
+            RetrofitUtil.getInstance()
+                    .getProvinces()
+                    .subscribe((List<Prov> provs)->{
+                        LogUtil.d("aaaa", provs.toString());
+                        boolean b = (Looper.getMainLooper() == Looper.myLooper());
+                    },(Throwable e)->{
+                        LogUtil.d("aaaaa", "bbbb");
+                    });
         }
     }
 
